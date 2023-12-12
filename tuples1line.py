@@ -1,5 +1,5 @@
 example = ("Root", ("Child A", ("Under-Child A", None, None), None), ("Child B", None, None))
-exampleRoot =  ("Root", None, None)
+exampleRoot = ("Root", None, None)
 
 def size(arbre) -> int: return 0 if arbre is None else 1 + size(arbre[1]) + size(arbre[2])
 def height(arbre) -> int: return 0 if arbre is None or (arbre[1] is None and arbre[2] is None) else 1 + max(height(arbre[1]), height(arbre[2]))
