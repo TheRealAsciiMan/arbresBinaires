@@ -8,6 +8,7 @@ class Noeud:
             self.gauche = noeud
         elif pos == "d":
             self.droite = noeud
+        return self
     def __str__(self) -> str:
         if self.gauche == None and self.droite == None:
             return self.etiquette
@@ -61,18 +62,38 @@ class Noeud:
         else:
             nombre_noeuds_internes_droite = 0
         return nombre_noeuds_internes_gauche + nombre_noeuds_internes_droite + 1
-def binaireFil(arbre):
-    if arbre.hauteur() <= 0:
-        return False
-    elif arbre.gauche is not None and arbre.droite is not None:
-        return False
-    elif arbre.droite is None:
-        if arbre.hauteur() == 1:
-            return True
-        else:
-            return arbre.gauche.binaireFil()
-    elif arbre.gauche is None:
-        if arbre.hauteur() == 1:
-            return True
-        else:
-            return arbre.droite.binaireFil()
+
+def prefixe(arb: Noeud) -> str:
+    ret = arb.etiquette
+    if arb.gauche is not None:
+        ret += " - " + prefixe(arb.gauche)
+    if arb.droite is not None:
+        ret += " - " + prefixe(arb.droite)
+    return ret
+
+def infixe(arb: Noeud) -> str:
+    ret = ""
+    if arb.gauche is not None:
+        ret += infixe(arb.gauche) + " - "
+    ret += arb.etiquette
+    if arb.droite is not None:
+        ret += " - " + infixe(arb.droite)
+    return ret
+
+def postfixe(arb: Noeud) -> str:
+    ret = ""
+    if arb.gauche is not None:
+        ret += postfixe(arb.gauche) + " - "
+    if arb.droite is not None:
+        ret += postfixe(arb.droite) + " - "
+    ret += arb.etiquette
+    return ret
+
+jaaj = Noeud("GP").ajoute_un_fils(Noeud("F1"), "g")
+jaaj.gauche.ajoute_un_fils(Noeud("PF1"), "g")
+jaaj.gauche.ajoute_un_fils(Noeud("PF2"), "d")
+jaaj.ajoute_un_fils(Noeud("F2"), "d")
+print(jaaj)
+print(prefixe(jaaj))
+print(infixe(jaaj))
+print(postfixe(jaaj))
