@@ -67,6 +67,47 @@ def taille(arbre) -> int:
     return 1 + taille(arbre.gauche) + taille(arbre.droite)
 
 
+def abr(arbre):
+    if not arbre:
+        return 0
+    valeur = int(arbre.etiquette)
+    if arbre.gauche and int(arbre.gauche.etiquette) >= valeur:
+        return False
+    if arbre.droite and int(arbre.droite.etiquette) <= valeur:
+        return False
+    return abr(arbre.gauche) and abr(arbre.droite)
+
+def min_abr(arbre):
+    if not arbre:
+        return 0
+    if not abr(arbre):
+        raise ValueError("L'arbre n'est pas un arbre binaire de recherche")
+    while arbre.gauche is not None:
+        arbre = arbre.gauche
+    return arbre.etiquette
+
+def max_abr(arbre):
+    if not arbre:
+        return 0
+    if not abr(arbre):
+        raise ValueError("L'arbre n'est pas un arbre binaire de recherche")
+    while arbre.droite is not None:
+        arbre = arbre.droite
+    return arbre.etiquette
+
+def find_abr(arbre, val):
+    if not arbre:
+        return 0
+    if not abr(arbre):
+        raise ValueError("L'arbre n'est pas un arbre binaire de recherche")
+    while arbre.droite and int(arbre.droite) < val:
+        if arbre.gauche == val or arbre.droite == val:
+            return True
+    while arbre.gauche and int(arbre.gauche) > val:
+        if arbre.gauche == val or arbre.droite == val:
+            return True
+    return False
+
 A = Noeud("A")
 B = Noeud("B")
 C = Noeud("C")

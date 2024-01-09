@@ -1,0 +1,23 @@
+Exo 2 p 130
+
+1. b.
+2. d.
+3. c.
+4. a.
+
+
+Exo 6 p 132
+
+a.
+                            A
+                         /     \
+                        L        G
+                      /  \      /  \
+                     O    R    I    T
+                         /    / \
+                        H    M   E
+
+b.
+
+largeur : ALGORITHME
+postfixe : OHELMEITGA
