@@ -8,6 +8,7 @@ class Noeud:
             self.gauche = noeud
         elif pos == "d":
             self.droite = noeud
+        return self
     def __str__(self) -> str:
         if self.gauche == None and self.droite == None:
             return self.etiquette
@@ -100,13 +101,34 @@ def find_abr(arbre, val):
         return 0
     if not abr(arbre):
         raise ValueError("L'arbre n'est pas un arbre binaire de recherche")
-    while arbre.droite and int(arbre.droite) < val:
-        if arbre.gauche == val or arbre.droite == val:
+    while arbre.droite and int(arbre.droite.etiquette) < val:
+        if int(arbre.gauche.etiquette) == val or int(arbre.droite.etiquette) == val:
             return True
-    while arbre.gauche and int(arbre.gauche) > val:
-        if arbre.gauche == val or arbre.droite == val:
+    while arbre.gauche and int(arbre.gauche.etiquette) > val:
+        if int(arbre.gauche.etiquette) == val or int(arbre.droite.etiquette) == val:
             return True
     return False
+
+def insert(arbre, cle):
+    if not arbre:
+        return 0
+    if not abr(arbre):
+        raise ValueError("L'arbre n'est pas un arbre binaire de recherche")
+    if int(arbre.etiquette) < cle:
+        arbre.ajoute_un_fils(Noeud(cle), "g")
+        return arbre
+    if int(arbre.etiquette) >= cle:
+        arbre.ajoute_un_fils(Noeud(cle), "d")
+        return arbre
+
+
+jaaj = Noeud("5")
+jaaj.ajoute_un_fils(Noeud("3"), "g")
+jaaj.gauche.ajoute_un_fils(Noeud("2"), "g")
+jaaj.gauche.ajoute_un_fils(Noeud("4"), "d")
+jaaj.ajoute_un_fils(Noeud("6"), "d")
+print(abr(jaaj))
+print(jaaj, "\n")
 
 A = Noeud("A")
 B = Noeud("B")
