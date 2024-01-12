@@ -68,38 +68,32 @@ def taille(arbre) -> int:
     return 1 + taille(arbre.gauche) + taille(arbre.droite)
 
 
-def abr(arbre):
-    if not arbre:
-        return 0
-    valeur = int(arbre.etiquette)
-    if arbre.gauche and int(arbre.gauche.etiquette) >= valeur:
+
+def abr_test(abr:Noeud):
+    if abr is None:
+        return True
+    if abr.gauche is not None and not (abr_test(abr.gauche) and int(abr.gauche.etiquette) <= int(abr.etiquette)):
         return False
-    if arbre.droite and int(arbre.droite.etiquette) <= valeur:
+    if abr.droite is not None and not (abr_test(abr.droite) and int(abr.droite.etiquette) >= int(abr.etiquette)):
         return False
-    return abr(arbre.gauche) and abr(arbre.droite)
+    return True
 
 def min_abr(arbre):
-    if not arbre:
-        return 0
-    if not abr(arbre):
+    if not abr_test(arbre):
         raise ValueError("L'arbre n'est pas un arbre binaire de recherche")
     while arbre.gauche is not None:
         arbre = arbre.gauche
     return arbre.etiquette
 
 def max_abr(arbre):
-    if not arbre:
-        return 0
-    if not abr(arbre):
+    if not abr_test(arbre):
         raise ValueError("L'arbre n'est pas un arbre binaire de recherche")
     while arbre.droite is not None:
         arbre = arbre.droite
     return arbre.etiquette
 
 def find_abr(arbre, val):
-    if not arbre:
-        return 0
-    if not abr(arbre):
+    if not abr_test(arbre):
         raise ValueError("L'arbre n'est pas un arbre binaire de recherche")
     while arbre.droite and int(arbre.droite.etiquette) < val:
         if int(arbre.gauche.etiquette) == val or int(arbre.droite.etiquette) == val:
@@ -112,7 +106,7 @@ def find_abr(arbre, val):
 def insert(arbre, cle):
     if not arbre:
         return 0
-    if not abr(arbre):
+    if not abr_test(arbre):
         raise ValueError("L'arbre n'est pas un arbre binaire de recherche")
     if int(arbre.etiquette) < cle:
         arbre.ajoute_un_fils(Noeud(cle), "g")
@@ -127,7 +121,7 @@ jaaj.ajoute_un_fils(Noeud("3"), "g")
 jaaj.gauche.ajoute_un_fils(Noeud("2"), "g")
 jaaj.gauche.ajoute_un_fils(Noeud("4"), "d")
 jaaj.ajoute_un_fils(Noeud("6"), "d")
-print(abr(jaaj))
+print(abr_test(jaaj))
 print(jaaj, "\n")
 
 A = Noeud("A")
